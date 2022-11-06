@@ -4,6 +4,7 @@ specifiers:
   '@chakra-ui/react': ^2.3.7
   '@emotion/react': ^11
   '@emotion/styled': ^11
+  '@fontsource/inter': ^4.5.14
   '@types/node': 18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.8
@@ -19,6 +20,7 @@ dependencies:
   '@chakra-ui/react': 2.3.7_6yp524rlfdss46amjfzanoyjh4
   '@emotion/react': 11.10.5_fan5qbzahqtxlm5dzefqlqx5ia
   '@emotion/styled': 11.10.5_otcjdfkheatawhug6fwk7ldzni
+  '@fontsource/inter': 4.5.14
   '@types/node': 18.11.9
   '@types/react': 18.0.25
   '@types/react-dom': 18.0.8
@@ -1272,6 +1274,10 @@ packages:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@fontsource/inter/4.5.14:
+    resolution: {integrity: sha512-JDC9AocdPLuGsASkvWw9hS5gtHE7K9dOwL98XLrk5yjYqxy4uVnScG58NUvFMJDVJRl/7c8Wnap6PEs+7Zvj1Q==}
     dev: false
 
   /@humanwhocodes/config-array/0.11.7:
