@@ -13,13 +13,13 @@ const Sidebar: FC = () => {
         <Link
           style={{
             width: "100%",
-            marginRight: 32
+            marginRight: 32,
           }}
           href={"/bruhh"}
           key={i}
         >
           <Button
-          as={"a"}
+            as={"a"}
             w={"full"}
             colorScheme={"yellow"}
             borderStart={"none"}
