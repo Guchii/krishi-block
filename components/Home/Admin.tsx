@@ -42,7 +42,7 @@ export const AdminModal: FC<AdminModalProps> = ({ isOpen, onClose }) => {
       >
         <ModalOverlay
           bg="blackAlpha.300"
-          backdropFilter="blur(10px) hue-rotate(45deg)"
+          backdropFilter="blur(10px)"
         />
         <ModalContent>
           <ModalHeader>Sooo you&apos;re an admin 🤔</ModalHeader>

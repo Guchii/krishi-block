@@ -29,7 +29,7 @@ export const UserModal : FC<AdminModalProps> = ({ isOpen, onClose }) => {
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay
           bg="blackAlpha.300"
-          backdropFilter="blur(10px) hue-rotate(45deg)"
+          backdropFilter="blur(10px)"
         />
         <ModalContent>
           <ModalHeader>Oh Hellow User 👋</ModalHeader>

@@ -9,12 +9,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { UserModal, AdminModal } from "../components/Home";
-import useMetaMask from "../utils/hooks/useMetaMask";
-import useWeb3 from "../utils/hooks/useWeb3";
 import useUserStore from "../utils/store";
+import useWeb3Store from "../utils/web3store";
+import shallow from "zustand/shallow";
 
 const props: ButtonProps = {
   width: "100px",
@@ -23,9 +23,12 @@ const props: ButtonProps = {
 };
 
 const Home: NextPage = () => {
-  const { isConnected, connectedAccount } = useMetaMask();
-  const { contract, balance } = useWeb3();
+  const contract = useWeb3Store((state) => state.contract);
   const [sdmHai, setSDMHai] = useState(false);
+  const [isConnected, connectedAccount] = useWeb3Store(
+    (state) => [state.isConnected, state.connectedAccount],
+    shallow
+  );
   const router = useRouter();
   const isSDM = async () => {
     if (contract && connectedAccount) {
@@ -48,10 +51,13 @@ const Home: NextPage = () => {
     onClose: userOnClose,
   } = useDisclosure();
   const userState = useUserStore((state) => state);
+  const Web3State = useWeb3Store((state) => state);
   const setUserType = useUserStore((state) => state.setUserType);
+
   useEffect(() => {
     setUserType(undefined);
   }, []);
+
   return (
     <Grid
       height={"100vh"}
@@ -89,9 +95,11 @@ const Home: NextPage = () => {
           </svg>
         </Heading>
         {true && <Text>{JSON.stringify(userState)}</Text>}
-        <Text>
-          Very Epic Smoodh app, Can get you a lot of bitches. A lot of &apos;em.
-        </Text>
+        {true && (
+          <Text>
+            {(sdmHai && isConnected) ? "SDM user lessgooo" : "Default or no user let's not goooo"}
+          </Text>
+        )}
         {!isConnected ? (
           <HStack>
             <Button {...props} onClick={adminOnOpen}>
@@ -102,7 +110,9 @@ const Home: NextPage = () => {
             </Button>
           </HStack>
         ) : (
-          <Button colorScheme={"yellow"} onClick={() => router.push('/sdm')}>Go to your Dashboard</Button>
+          <Button colorScheme={"yellow"} onClick={() => router.push("/sdm")}>
+            Go to your Dashboard
+          </Button>
         )}
       </VStack>
       <AdminModal onClose={adminOnClose} isOpen={adminIsOpen} />
