@@ -14,7 +14,6 @@ const Sidebar: FC = () => {
   const userType = useUserStore(state => state.userType)
   return (
     <VStack w="full" pt={8} spacing={4} pos={"sticky"} top={0}>
-      <Link href={"/"}>Home (temp)</Link>
       {RoleLinks.get(userType || "4")!.map((val, i) => (
         <Link
           style={{
