@@ -2,7 +2,10 @@ import { Button } from "@chakra-ui/react";
 import { FC } from "react";
 import useMetaMask from "../../utils/hooks/useMetaMask";
 
-export const ConnectWallet: FC<{ disabled: boolean }> = ({ disabled }) => {
+export const ConnectWallet: FC<{
+  disabled: boolean;
+  callback?: (props: any | undefined) => void;
+}> = ({ disabled }) => {
   const { connectWallet, isConnected } = useMetaMask();
   return (
     <Button

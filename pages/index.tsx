@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { UserModal, AdminModal } from "../components/Home";
 import useMetaMask from "../utils/hooks/useMetaMask";
 import useWeb3 from "../utils/hooks/useWeb3";
+import useUserStore from "../utils/store";
 
 const props: ButtonProps = {
   width: "100px",
@@ -34,8 +35,21 @@ const Home: NextPage = () => {
     console.log("nice");
     isSDM();
   });
-  const { isOpen: adminIsOpen, onOpen: adminOnOpen, onClose: adminOnClose, } = useDisclosure();
-  const { isOpen: userIsOpen, onOpen: userOnOpen, onClose: userOnClose } = useDisclosure();
+  const {
+    isOpen: adminIsOpen,
+    onOpen: adminOnOpen,
+    onClose: adminOnClose,
+  } = useDisclosure();
+  const {
+    isOpen: userIsOpen,
+    onOpen: userOnOpen,
+    onClose: userOnClose,
+  } = useDisclosure();
+  const userState = useUserStore((state) => state);
+  const setUserType = useUserStore((state) => state.setUserType);
+  useEffect(() => {
+    setUserType(undefined);
+  }, []);
   return (
     <Grid
       height={"100vh"}
@@ -72,9 +86,7 @@ const Home: NextPage = () => {
             />
           </svg>
         </Heading>
-        <Text>
-          {isConnected && (sdmHai ? "YES Acount is SDM" : "NO NHI hai")}
-        </Text>
+        {true && <Text>{JSON.stringify(userState)}</Text>}
         <Text>
           Very Epic Smoodh app, Can get you a lot of bitches. A lot of &apos;em.
         </Text>
