@@ -6,6 +6,7 @@ import {
   HStack,
   Text,
   useDisclosure,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
@@ -36,10 +37,18 @@ const Home: NextPage = () => {
       setSDMHai(isSDM);
     }
   };
-  useEffect(() => {
-    console.log("nice");
-    isSDM();
-  });
+
+  const checkFunctions = (inp: "1" | "2" | "3" | "4") => {
+    switch (inp) {
+      case "3":
+        return contract?.isSDM;
+      case "2":
+        return contract?.isTehsildar;
+      case "1":
+        return contract?.isLekhpal;
+    }
+  };
+
   const {
     isOpen: adminIsOpen,
     onOpen: adminOnOpen,
@@ -50,13 +59,41 @@ const Home: NextPage = () => {
     onOpen: userOnOpen,
     onClose: userOnClose,
   } = useDisclosure();
-  const userState = useUserStore((state) => state);
-  const Web3State = useWeb3Store((state) => state);
+  const userType = useUserStore((state) => state.userType);
   const setUserType = useUserStore((state) => state.setUserType);
+  const toast = useToast();
+  const checkUserType = async () => {
+    if (isConnected && userType !== undefined && contract) {
+      console.log("Checking user type", userType);
+      const isUserType = await checkFunctions(userType)(connectedAccount);
+      console.log({ isUserType });
+      if (!isUserType) {
+        // set permission mismatch to true
+        // route user to the 403 error route
+        toast({
+          title: `not user of type ${userType}`,
+          description: "redirecting you to the error page",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        router.push("/error?code=403")
+      } else {
+        toast({
+          title: `user of type ${userType}, verified`,
+          description: "You can move to your dashboard now",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    }
+  };
 
   useEffect(() => {
-    setUserType(undefined);
-  }, []);
+    if (!connectedAccount) setUserType(undefined);
+    checkUserType();
+  }, [userType, connectedAccount]);
 
   return (
     <Grid
@@ -94,12 +131,6 @@ const Home: NextPage = () => {
             />
           </svg>
         </Heading>
-        {true && <Text>{JSON.stringify(userState)}</Text>}
-        {true && (
-          <Text>
-            {(sdmHai && isConnected) ? "SDM user lessgooo" : "Default or no user let's not goooo"}
-          </Text>
-        )}
         {!isConnected ? (
           <HStack>
             <Button {...props} onClick={adminOnOpen}>

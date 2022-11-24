@@ -18,11 +18,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const isConnected = useWeb3Store((state) => state.connectedAccount);
   useEffect(() => {
-    if (router.pathname !== "/") setIsDashboard(true);
+    if (router.pathname !== "/" && router.pathname !== '/error') setIsDashboard(true);
     else setIsDashboard(false);
   }, [router.pathname]);
   useEffect(() => {
-    if (!isConnected) router.push("/");
+    if (!isConnected && router.pathname !== "/error") router.push("/");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected]);
   return (
