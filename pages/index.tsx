@@ -9,6 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { NextPage } from "next";
+import { Router, useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { UserModal, AdminModal } from "../components/Home";
 import useMetaMask from "../utils/hooks/useMetaMask";
@@ -25,6 +26,7 @@ const Home: NextPage = () => {
   const { isConnected, connectedAccount } = useMetaMask();
   const { contract, balance } = useWeb3();
   const [sdmHai, setSDMHai] = useState(false);
+  const router = useRouter();
   const isSDM = async () => {
     if (contract && connectedAccount) {
       const isSDM = await contract.isSDM(connectedAccount);
@@ -90,14 +92,18 @@ const Home: NextPage = () => {
         <Text>
           Very Epic Smoodh app, Can get you a lot of bitches. A lot of &apos;em.
         </Text>
-        <HStack>
-          <Button {...props} onClick={adminOnOpen}>
-            Admin
-          </Button>
-          <Button {...props} onClick={userOnOpen}>
-            User
-          </Button>
-        </HStack>
+        {!isConnected ? (
+          <HStack>
+            <Button {...props} onClick={adminOnOpen}>
+              Admin
+            </Button>
+            <Button {...props} onClick={userOnOpen}>
+              User
+            </Button>
+          </HStack>
+        ) : (
+          <Button colorScheme={"yellow"} onClick={() => router.push('/sdm')}>Go to your Dashboard</Button>
+        )}
       </VStack>
       <AdminModal onClose={adminOnClose} isOpen={adminIsOpen} />
       <UserModal onClose={userOnClose} isOpen={userIsOpen} />

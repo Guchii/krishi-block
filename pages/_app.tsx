@@ -16,10 +16,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     if (router.pathname !== "/") setIsDashboard(true);
     else setIsDashboard(false);
   }, [router.pathname]);
-  // useEffect(() => {
-  //   if (!isConnected) router.push("/");
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isConnected]);
+  useEffect(() => {
+    if (!isConnected) router.push("/");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isConnected]);
   return (
     <ChakraProvider theme={theme}>
       {!isDashboard ? (
