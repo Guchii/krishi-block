@@ -11,6 +11,8 @@ import {
   Stack,
   Text,
   VStack,
+  Link as ChakraLink,
+  useColorMode,
 } from "@chakra-ui/react";
 import { FC } from "react";
 import Link from "next/link";
@@ -22,7 +24,6 @@ import useUserStore from "../utils/store";
 // https://mumbai.polygonscan.com/address/0xbc96a64d480d70e96ee023e67017c06f0706548a
 
 const Sidebar: FC = () => {
-  const router = useRouter();
   const [connectedAccount, isConnected] = useWeb3Store((state) => [
     state.connectedAccount,
     state.isConnected,
@@ -56,7 +57,7 @@ const Sidebar: FC = () => {
           </Button>
         </Link>
       ))}
-      <Popover colorScheme={"yellow"}>
+      <Popover>
         <PopoverTrigger>
           <Stack
             cursor={"pointer"}
@@ -88,12 +89,18 @@ const Sidebar: FC = () => {
             </VStack>
           </Stack>
         </PopoverTrigger>
-        <PopoverContent>
+        <PopoverContent mx={4}>
           <PopoverArrow />
           <PopoverCloseButton />
-          <PopoverHeader>Confirmation!</PopoverHeader>
+          <PopoverHeader>Yeah! That&apos;s your wallet address</PopoverHeader>
           <PopoverBody>
-            Are you sure you want to have that milkshake?
+            <ChakraLink
+              href="https://metamask.zendesk.com/hc/en-us/articles/360059535551-Disconnect-wallet-from-a-dapp"
+              isExternal
+              color={"yellow.600"}
+            >
+              How to disconnect?
+            </ChakraLink>
           </PopoverBody>
         </PopoverContent>
       </Popover>
