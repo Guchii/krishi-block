@@ -18,7 +18,6 @@ const Home: NextPage = () => {
     },
   });
   if (query.isLoading) return <>Loading Profile....</>;
-  // return <Box>{query.isSuccess && <>{JSON.stringify(query.data)}</>}</Box>;
   return (
     <Box>
       <Heading fontSize={"4xl"}>
