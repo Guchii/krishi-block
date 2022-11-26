@@ -37,7 +37,7 @@ const Auth: NextPage = () => {
             colorScheme={"yellow"}
             minW="48"
           >
-            Add
+            Change SDM
           </Button>
       </VStack>
       <ChangeConfirmModal
