@@ -1,49 +1,83 @@
-import { useToast, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, Text } from "@chakra-ui/react";
+import {
+  useToast,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Text,
+  Code,
+} from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
-import { FC, useEffect } from "react";
+import { useRouter } from "next/router";
+import { FC, useEffect, useState } from "react";
 import useWeb3Store from "../../utils/web3store";
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export const ConfirmModal: FC<{ isOpen: boolean; onClose: () => void; data: any }> = ({
-  isOpen,
-  onClose,
-  data,
-}) => {
+export const UserConfirmModal: FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  data: any;
+}> = ({ isOpen, onClose, data }) => {
+  const [hash, setHash] = useState<string>();
   const toast = useToast();
   const contract = useWeb3Store((state) => state.contract);
+  const router = useRouter();
   const mutation = useMutation(async () => {
-    await sleep(2000);
-    return "nice";
+    const txn = await contract?.registerUser(
+      data.name,
+      data.age,
+      data.city,
+      data.aadhar,
+      data.pan,
+      data.document,
+      data.email
+    );
+    console.log("Registering User....");
+    await txn.wait();
+    setHash(txn.hash);
   });
   const confirmHandler = () => {
     mutation.mutate();
   };
   useEffect(() => {
+    if (mutation.isError) {
+      toast({
+        title: "Error",
+        description: "An error occured while registering user",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
     if (mutation.isSuccess) {
       toast({
-        title: "Land Added",
-        description: "Land added successfully",
+        title: "User Created",
+        description: `User creation successful ${hash?.slice(0, 10)}`,
         status: "success",
-        duration: 1000,
+        duration: 7000,
         isClosable: true,
       });
       onClose();
-      console.log({ data: mutation.data });
+      router.push("/user");
     }
-  }, [mutation.isSuccess]);
+  }, [mutation.isSuccess, hash]);
   return (
     <>
       <Modal isOpen={isOpen} colorScheme="yellow" onClose={onClose} isCentered>
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent>
-          <ModalHeader>Confirm Adding Land</ModalHeader>
+          <ModalHeader>Confirm Adding User</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            Add land owner with the following details
-            <Text>{JSON.stringify(data, null, 8)}</Text>
+            Create User with the following details
+            <Code p={2}>{JSON.stringify(data, null, 8)}</Code>
           </ModalBody>
           <ModalFooter>
             <Button

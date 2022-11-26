@@ -8,8 +8,8 @@ export const FormField: FC<{
   inputProps?: InputProps;
 }> = ({ name, errorsObj, register, inputProps }) => {
   return (
-    <FormControl isInvalid={!!errorsObj}>
-      <FormLabel textTransform={"capitalize"}>{name}</FormLabel>
+    <FormControl isInvalid={!!errorsObj} isRequired>
+      <FormLabel textTransform={"capitalize"} fontWeight="bold">{name}</FormLabel>
       <Input
         {...inputProps}
         {...register(name, {
