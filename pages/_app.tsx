@@ -24,10 +24,16 @@ function MyApp({ Component, pageProps }: AppProps) {
     (state) => [state.connectedAccount, state.connectedAccount, state.contract],
     shallow
   );
-  const [userType, setUserType, setPermissionMismatch] = useUserStore(
-    (state) => [state.userType, state.setUserType, state.setPermissionMismatch],
-    shallow
-  );
+  const [userType, setUserType, setPermissionMismatch, permissionMismatch] =
+    useUserStore(
+      (state) => [
+        state.userType,
+        state.setUserType,
+        state.setPermissionMismatch,
+        state.permissionMismatch,
+      ],
+      shallow
+    );
   useEffect(() => {
     if (router.pathname !== "/" && router.pathname !== "/error")
       setIsDashboard(true);
@@ -102,18 +108,18 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
     checkUserType();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userType, connectedAccount]);
+  }, [userType, connectedAccount, permissionMismatch]);
   return (
     <QueryClientProvider client={queryClient}>
-    <ChakraProvider theme={theme}>
-      {!isDashboard ? (
-        <Component {...pageProps} />
-      ) : (
-        <Layout>
+      <ChakraProvider theme={theme}>
+        {!isDashboard ? (
           <Component {...pageProps} />
-        </Layout>
-      )}
-    </ChakraProvider>
+        ) : (
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        )}
+      </ChakraProvider>
     </QueryClientProvider>
   );
 }

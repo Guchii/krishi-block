@@ -1,11 +1,7 @@
 import { NextPage } from "next";
 
 const AllLandInspectors: NextPage = () => {
-    return (
-        <>
-            All Land Inspector
-        </>
-    )
-}
+  return <>List All Lekhpals</>;
+};
 
-export default AllLandInspectors
+export default AllLandInspectors;
