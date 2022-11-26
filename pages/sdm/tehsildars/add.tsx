@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import { FormField, ChangeConfirmModal } from '../../../components/Form';
+import { FormField, TehsildarConfirmModal } from '../../../components/Form';
 
 const Auth: NextPage = () => {
   const {
@@ -52,7 +52,7 @@ const Auth: NextPage = () => {
             Add
           </Button>
       </VStack>
-      <ChangeConfirmModal
+      <TehsildarConfirmModal
         isOpen={confirmIsOpen}
         onClose={confirmOnClose}
         data={data}
