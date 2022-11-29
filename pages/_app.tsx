@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { AppProps } from "next/app";
-import { ChakraProvider, Text, useDisclosure, useToast } from "@chakra-ui/react";
+import {
+  ChakraProvider,
+  Text,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
 import theme from "../theme";
 import Layout from "../components/Layout";
 import "@fontsource/josefin-sans";
@@ -23,7 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [isDashboard, setIsDashboard] = useState<boolean>(false);
   const [isConnected, connectedAccount, contract] = useWeb3Store(
-    (state) => [state.connectedAccount, state.connectedAccount, state.contract],
+    (state) => [state.isConnected, state.connectedAccount, state.contract],
     shallow
   );
   const [userType, setUserType, setPermissionMismatch, permissionMismatch] =
@@ -58,56 +63,67 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   const checkUserType = async () => {
-    if (isConnected && userType !== undefined && contract) {
-      if (userType === "4") {
-        const isRegistered = await contract?.isUserRegistered(connectedAccount);
-        if (!isRegistered) {
-          toast({
-            title: `user profile not found`,
-            description: "redirecting you to the profile creation page",
-            status: "success",
-            duration: 1000,
-          });
-          router.push("/user/create");
+    try {
+      if (isConnected && userType !== undefined && contract) {
+        if (userType === "4") {
+          const isRegistered = await contract?.isUserRegistered(
+            connectedAccount
+          );
+          if (!isRegistered) {
+            toast({
+              title: `user profile not found`,
+              description: "redirecting you to the profile creation page",
+              status: "success",
+              duration: 1000,
+            });
+            router.push("/user/create");
+          } else {
+            toast({
+              title: `user profile found`,
+              description: "You can move to your dashboard now",
+              status: "success",
+              duration: 1000,
+            });
+            router.push("/user/");
+          }
         } else {
-          toast({
-            title: `user profile found`,
-            description: "You can move to your dashboard now",
-            status: "success",
-            duration: 1000,
-          });
-          router.push("/user/");
-        }
-      } else {
-        const isUserType = await checkFunctions(userType)(connectedAccount);
-        if (!isUserType) {
-          setPermissionMismatch(true);
+          const isUserType = await checkFunctions(userType)(connectedAccount);
+          if (!isUserType) {
+            setPermissionMismatch(true);
 
-          router.push("/error");
-          toast({
-            title: `not user of type ${userType}`,
-            description: "redirecting you to the error page",
-            status: "error",
-            duration: 3000,
-            isClosable: true,
-          });
-        } else {
-          toast({
-            title: `user of type ${userType}, verified`,
-            description: "You can move to your dashboard now",
-            status: "success",
-            duration: 3000,
-            isClosable: true,
-          });
-          router.push(RoleLinks.get(userType as any)?.at(0)?.href as string);
+            router.push("/error");
+            toast({
+              title: `not user of type ${userType}`,
+              description: "redirecting you to the error page",
+              status: "error",
+              duration: 3000,
+              isClosable: true,
+            });
+          } else {
+            toast({
+              title: `user of type ${userType}, verified`,
+              description: "You can move to your dashboard now",
+              status: "success",
+              duration: 3000,
+              isClosable: true,
+            });
+            router.push(RoleLinks.get(userType as any)?.at(0)?.href as string);
+          }
         }
       }
+    } catch (e) {
+      toast({
+        title: `error`,
+        description: "Problem verifying you",
+        status: "error",
+        duration: 3000,
+      });
     }
   };
 
   useEffect(() => {
     if (isConnected) {
-      if (userType !== undefined) checkUserType();
+      checkUserType();
     } else {
       setPermissionMismatch(false);
     }
@@ -125,9 +141,17 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Text zIndex={10000} pos="fixed" top={0} left={"50%"}>
-        {userType}
-        </Text>
+      <Text
+        w="full"
+        display={"inline-flex"}
+        zIndex={10000}
+        pos="fixed"
+        top={0}
+        left={"50%"}
+      >
+        {userType} {isConnected ? "yes" : "no"}{" "}
+        {permissionMismatch ? "yes" : "no"}
+      </Text>
       <ChakraProvider theme={theme}>
         {!isDashboard ? (
           <Component {...pageProps} />

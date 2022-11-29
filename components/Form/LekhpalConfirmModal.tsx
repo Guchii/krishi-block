@@ -10,7 +10,7 @@ import {
   ModalOverlay,
   useToast,
 } from '@chakra-ui/react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ethers } from 'ethers';
 import { FC, useEffect, useState } from 'react';
 
