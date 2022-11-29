@@ -15,6 +15,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FC, useCallback, useEffect, useState } from "react";
+import shallow from "zustand/shallow";
 import useUserStore from "../../utils/store";
 import { ConnectWallet } from "./ConnectWallet";
 
@@ -25,11 +26,10 @@ interface AdminModalProps {
 
 export const AdminModal: FC<AdminModalProps> = ({ isOpen, onClose }) => {
   const [value, setValue] = useState<usertype | string>("1");
-  const setUserType = useUserStore((state) => state.setUserType);
-  useEffect(() => {
-    setUserType(value as usertype);
-  }, [value, isOpen]);
-
+  const [userType, setUserType] = useUserStore(
+    (state) => [state.userType, state.setUserType],
+    shallow
+  );
   return (
     <>
       <Modal
@@ -38,10 +38,7 @@ export const AdminModal: FC<AdminModalProps> = ({ isOpen, onClose }) => {
         onClose={onClose}
         isCentered
       >
-        <ModalOverlay
-          bg="blackAlpha.300"
-          backdropFilter="blur(10px)"
-        />
+        <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent>
           <ModalHeader>Sooo you&apos;re an admin 🤔</ModalHeader>
           <ModalCloseButton />
@@ -49,7 +46,7 @@ export const AdminModal: FC<AdminModalProps> = ({ isOpen, onClose }) => {
             <Text fontWeight="bold" mb="1rem">
               choose your role
             </Text>
-            <RadioGroup onChange={setValue} value={value}>
+            <RadioGroup onChange={(val) => setUserType(val as usertype)} value={userType}>
               <Stack direction="row" gap="3">
                 <Radio value="1">Lekhpal</Radio>
                 <Radio value="2">Tehsildar</Radio>
@@ -59,7 +56,13 @@ export const AdminModal: FC<AdminModalProps> = ({ isOpen, onClose }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={onClose} variant="outline" rounded={"full"}>
+            <Button
+              colorScheme="red"
+              mr={3}
+              onClick={onClose}
+              variant="outline"
+              rounded={"full"}
+            >
               Close
             </Button>
             <ConnectWallet disabled={typeof value === "undefined"} />

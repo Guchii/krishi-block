@@ -27,7 +27,10 @@ const props: ButtonProps = {
 
 const Home: NextPage = () => {
   const [isConnected] = useWeb3Store((state) => [state.isConnected], shallow);
-  const userType = useUserStore((state) => state.userType);
+  const [userType, setUserType] = useUserStore(
+    (state) => [state.userType, state.setUserType],
+    shallow
+  );
   const router = useRouter();
 
   const {
@@ -50,7 +53,13 @@ const Home: NextPage = () => {
             <Button {...props} onClick={adminOnOpen}>
               Admin
             </Button>
-            <Button {...props} onClick={userOnOpen}>
+            <Button
+              {...props}
+              onClick={() => {
+                setUserType("4");
+                userOnOpen();
+              }}
+            >
               User
             </Button>
           </HStack>

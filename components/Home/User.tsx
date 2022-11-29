@@ -21,9 +21,6 @@ interface AdminModalProps {
 
 export const UserModal: FC<AdminModalProps> = ({ isOpen, onClose }) => {
   const setUserType = useUserStore((state) => state.setUserType);
-  useEffect(() => {
-    setUserType("4");
-  }, [isOpen]);
   return (
     <>
       <Modal

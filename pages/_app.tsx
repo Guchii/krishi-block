@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { AppProps } from "next/app";
-import { ChakraProvider, useDisclosure, useToast } from "@chakra-ui/react";
+import { ChakraProvider, Text, useDisclosure, useToast } from "@chakra-ui/react";
 import theme from "../theme";
 import Layout from "../components/Layout";
 import "@fontsource/josefin-sans";
@@ -13,7 +13,6 @@ import useWeb3Store from "../utils/web3store";
 import useUserStore from "../utils/store";
 import shallow from "zustand/shallow";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { NotFoundModal } from "../components/Home/NotFoundModal";
 import RoleLinks from "../utils/links";
 
 const queryClient = new QueryClient();
@@ -37,6 +36,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       ],
       shallow
     );
+
+  useEffect(() => {
+    const localUserType = localStorage.getItem("userType") as usertype;
+    if (localUserType) {
+      setUserType(localUserType);
+    }
+  }, []);
+
   const toast = useToast();
 
   const checkFunctions = (inp: "1" | "2" | "3" | "4") => {
@@ -103,8 +110,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       if (userType !== undefined) checkUserType();
     } else {
       setPermissionMismatch(false);
-      setUserType(undefined);
-      setUserType(undefined);
     }
   }, [isConnected, userType]);
 
@@ -120,6 +125,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Text zIndex={10000} pos="fixed" top={0} left={"50%"}>
+        {userType}
+        </Text>
       <ChakraProvider theme={theme}>
         {!isDashboard ? (
           <Component {...pageProps} />
