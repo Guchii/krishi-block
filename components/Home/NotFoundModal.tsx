@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Button,
   HStack,
@@ -23,13 +22,9 @@ interface AdminModalProps {
   onClose: () => void;
 }
 
-export const AdminModal: FC<AdminModalProps> = ({ isOpen, onClose }) => {
+export const NotFoundModal: FC<AdminModalProps> = ({ isOpen, onClose }) => {
   const [value, setValue] = useState<usertype | string>("1");
   const setUserType = useUserStore((state) => state.setUserType);
-  useEffect(() => {
-    setUserType(value as usertype);
-  }, [value, isOpen]);
-
   return (
     <>
       <Modal
@@ -38,31 +33,35 @@ export const AdminModal: FC<AdminModalProps> = ({ isOpen, onClose }) => {
         onClose={onClose}
         isCentered
       >
-        <ModalOverlay
-          bg="blackAlpha.300"
-          backdropFilter="blur(10px)"
-        />
+        <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent>
-          <ModalHeader>Sooo you&apos;re an admin 🤔</ModalHeader>
+          <ModalHeader>Couldn&apos;t find your user type</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Text fontWeight="bold" mb="1rem">
-              choose your role
+              disconnect your wallet or choose the role you opted for
             </Text>
             <RadioGroup onChange={setValue} value={value}>
               <Stack direction="row" gap="3">
                 <Radio value="1">Lekhpal</Radio>
                 <Radio value="2">Tehsildar</Radio>
                 <Radio value="3">SDM</Radio>
+                <Radio value="4">User</Radio>
               </Stack>
             </RadioGroup>
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={onClose} variant="outline" rounded={"full"}>
-              Close
+            <Button
+              colorScheme="orange"
+              onClick={() => {
+                setUserType(value as usertype);
+                onClose();
+              }}
+              rounded={"full"}
+            >
+              Confirm
             </Button>
-            <ConnectWallet disabled={typeof value === "undefined"} />
           </ModalFooter>
         </ModalContent>
       </Modal>

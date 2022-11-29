@@ -71,10 +71,10 @@ export const TehsildarConfirmModal: FC<{
       <Modal isOpen={isOpen} colorScheme="yellow" onClose={onClose} isCentered>
         <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px)" />
         <ModalContent>
-          <ModalHeader>Confirm Adding Land</ModalHeader>
+          <ModalHeader>Confirm Adding Tehsildar</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            Add Land with the following details
+            Add Tehsildar with the following details
             <Code
               p={4}
               rounded="xl"
@@ -97,7 +97,7 @@ export const TehsildarConfirmModal: FC<{
             <Button
               colorScheme={"green"}
               onClick={confirmHandler}
-              loadingText="Adding Land"
+              loadingText="Adding Tehsildar"
               isLoading={mutation.isLoading}
             >
               Continue
