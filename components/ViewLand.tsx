@@ -31,7 +31,10 @@ export default function ViewDetail({
 }) {
   const queryClient = useQueryClient();
   const [userInfo, setUserInfo] = useState<any>(() => {
-    return queryClient.getQueryData(["userInfo"]);
+    if(!!queryClient.getQueryData(["userInfo"]))
+      return (queryClient.getQueryData(["userInfo"]));
+    else 
+      return ({name: "Loading...", age:4,isUserVerified: false, email: "Loading...", phone: "Loading..."});
   });
   return (
     <>
