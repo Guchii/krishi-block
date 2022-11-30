@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   useToast,
   Modal,
@@ -39,10 +40,7 @@ export const LandConfirmModal: FC<{
       data.price,
       data.pid,
       data.survey,
-      data.document,
-      {
-        gasLimit: BigInt(300000),
-      }
+      data.document
     );
     console.log("Adding Land ....");
     await txn.wait();

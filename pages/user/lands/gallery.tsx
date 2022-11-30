@@ -35,7 +35,7 @@ const Gallery: NextPage = () => {
   const [modalLand, setModalLand] = useState<Partial<Land>>({});
   return (
     <>
-      <Wrap p={8} spacing={8}>
+      <Wrap>
         {[...Array(10)].map((_, i) => (
           <>
             <WrapItem key={i}>
