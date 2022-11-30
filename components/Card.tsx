@@ -1,21 +1,25 @@
-import { VStack, Box, Flex, HStack, Button, Text, Image, BoxProps } from "@chakra-ui/react";
+import {
+  VStack,
+  Box,
+  Flex,
+  HStack,
+  Button,
+  Text,
+  Image,
+  BoxProps,
+} from "@chakra-ui/react";
 import { FC } from "react";
 
-const Card: FC<Partial<Land>> = ({
+const Card: FC<Partial<Land> & { openModal: (x: Partial<Land>) => void }> = ({
   area = 2500,
   unit = "sq.ft",
   address = "Sant Nagar, Burari, Delhi",
   onSale = false,
   image = "https://placekitten.com/600/800",
+  openModal,
 }) => {
   return (
-    <VStack
-      w={"80"}
-      minH={"48"}
-      p={4}
-      py={8}
-      rounded="xl"
-    >
+    <VStack w={"80"} minH={"48"} p={4} py={8} rounded="xl">
       <Box position={"relative"} w="full">
         <Image
           alt="Property"
@@ -35,12 +39,9 @@ const Card: FC<Partial<Land>> = ({
         <Text>{unit}</Text>
       </Flex>
       <Text textTransform={"capitalize"}>{address}</Text>
-      <HStack>
-        <Button disabled={onSale} colorScheme={"red"}>
-          {onSale ? "Sell" : "For Sale"}
-        </Button>
-        <Button variant={"ghost"}>View Details</Button>
-      </HStack>
+      <Button variant={"solid"} onClick={() => openModal({area, unit, address})}>
+        View Details
+      </Button>
     </VStack>
   );
 };
