@@ -16,9 +16,9 @@ import {
   ModalFooter,
   Button,
   Text,
-} from "@chakra-ui/react";
-import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+} from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
 export default function ViewDetail({
   data,
@@ -31,31 +31,31 @@ export default function ViewDetail({
 }) {
   const queryClient = useQueryClient();
   const [userInfo, setUserInfo] = useState<any>(() => {
-    if(!!queryClient.getQueryData(["userInfo"]))
-      return (queryClient.getQueryData(["userInfo"]));
+    if(!!queryClient.getQueryData(['userInfo']))
+      return (queryClient.getQueryData(['userInfo']));
     else 
-      return ({name: "Loading...", age:4,isUserVerified: false, email: "Loading...", phone: "Loading..."});
+      return ({name: 'Loading...', age:4,isUserVerified: false, email: 'Loading...', phone: 'Loading...'});
   });
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} size="2xl" isCentered>
-        <ModalOverlay backdropFilter={"blur(8px)"} />
+        <ModalOverlay backdropFilter={'blur(8px)'} />
         <ModalContent>
           <ModalHeader>Land Details</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Wrap w="full" spacing={8}>
               <WrapItem>
-                <VStack alignItems={"start"}>
-                  <Flex gap={4} alignItems={"center"}>
-                    <Text fontWeight={"bold"} fontSize="3xl">
+                <VStack alignItems={'start'}>
+                  <Flex gap={4} alignItems={'center'}>
+                    <Text fontWeight={'bold'} fontSize="3xl">
                       Land {data.id}
                     </Text>
                     <Tooltip label="verified by lekhpal" placement="right">
                       <Box
-                        color={"twitter.300"}
-                        w={"12"}
-                        h={"12"}
+                        color={'twitter.300'}
+                        w={'12'}
+                        h={'12'}
                         position="relative"
                         top={-1}
                       >
@@ -64,8 +64,8 @@ export default function ViewDetail({
                           viewBox="0 0 24 24"
                           fill="currentColor"
                           style={{
-                            width: "100%",
-                            height: "100%",
+                            width: '100%',
+                            height: '100%',
                           }}
                         >
                           <path
@@ -77,36 +77,36 @@ export default function ViewDetail({
                       </Box>
                     </Tooltip>
                   </Flex>
-                  <Text fontWeight={"bold"} fontSize="3xl">
+                  <Text fontWeight={'bold'} fontSize="3xl">
                     {data.area} Sq.Ft
                   </Text>
-                  <Text fontWeight={"bold"} fontSize="xl">
+                  <Text fontWeight={'bold'} fontSize="xl">
                     {data.address?.slice(0, 23)}
-                    {(data.address?.length as number) > 23 && "..."}
+                    {(data.address?.length as number) > 23 && '...'}
                   </Text>
                 </VStack>
               </WrapItem>
               <WrapItem>
                 <Box
-                  rounded={"2xl"}
-                  bg={useColorModeValue("gray.100", "gray.800")}
+                  rounded={'2xl'}
+                  bg={useColorModeValue('gray.100', 'gray.800')}
                   p={4}
                   px={6}
                 >
                   <Text
-                    display={"inline-flex"}
+                    display={'inline-flex'}
                     alignItems="center"
                     gap={2}
-                    fontWeight={"bold"}
+                    fontWeight={'bold'}
                     fontSize="xl"
                   >
-                    {userInfo.name || "User"}, {JSON.parse(userInfo.age)}{" "}
+                    {userInfo.name || 'User'}, {JSON.parse(userInfo.age)}{' '}
                     {userInfo.isUserVerified ? (
                       <Tooltip label="verified by lekhpal" placement="right">
                         <Box
-                          color={"twitter.300"}
-                          w={"6"}
-                          h={"6"}
+                          color={'twitter.300'}
+                          w={'6'}
+                          h={'6'}
                           position="relative"
                           top={-1}
                         >
@@ -115,8 +115,8 @@ export default function ViewDetail({
                             viewBox="0 0 24 24"
                             fill="currentColor"
                             style={{
-                              width: "100%",
-                              height: "100%",
+                              width: '100%',
+                              height: '100%',
                             }}
                           >
                             <path
@@ -143,7 +143,7 @@ export default function ViewDetail({
           <ModalFooter>
             <Button
               colorScheme="red"
-              variant={"outline"}
+              variant={'outline'}
               mr={3}
               onClick={onClose}
             >
@@ -151,7 +151,7 @@ export default function ViewDetail({
             </Button>
             <Button
               variant="solid"
-              colorScheme={"green"}
+              colorScheme={'green'}
               disabled
               leftIcon={
                 <svg

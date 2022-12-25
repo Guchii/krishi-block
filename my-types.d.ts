@@ -1,6 +1,6 @@
 interface Land {
   area: number;
-  unit: "sq.ft" | "sq.km";
+  unit: 'sq.ft' | 'sq.km';
   address: string;
   onSale: boolean;
   image : string;
@@ -23,10 +23,10 @@ interface User {
 }
 
 type usertype =
-  | "1"
-  | "2"
-  | "3"
-  | "4" 
+  | '1'
+  | '2'
+  | '3'
+  | '4' 
   | undefined;
 
 interface LinkItemInterface {

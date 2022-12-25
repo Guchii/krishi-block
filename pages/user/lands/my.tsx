@@ -1,11 +1,11 @@
-import { useDisclosure, Wrap, WrapItem } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
-import { NextPage } from "next";
-import { useEffect, useState } from "react";
+import { useDisclosure, Wrap, WrapItem } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { NextPage } from 'next';
+import { useEffect, useState } from 'react';
 
-import Card from "../../../components/Card";
-import ViewDetail from "../../../components/ViewLand";
-import useWeb3Store from "../../../utils/web3store";
+import Card from '../../../components/Card';
+import ViewDetail from '../../../components/ViewLand';
+import useWeb3Store from '../../../utils/web3store';
 
 const Home: NextPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -14,7 +14,7 @@ const Home: NextPage = () => {
   const contract = useWeb3Store((state) => state.contract);
   const connectedAccount = useWeb3Store((state) => state.connectedAccount);
   const myLands = useQuery(
-    ["lands", "my"],
+    ['lands', 'my'],
     async () => {
       const lands = await contract?.paginateLands(6, 1);
       return lands;
@@ -42,7 +42,6 @@ const Home: NextPage = () => {
     <>
       <Wrap>
         {lands.map((land, i) => (
-          <>
             <WrapItem key={i}>
               <Card
                 land={land}
@@ -52,7 +51,6 @@ const Home: NextPage = () => {
                 }}
               />
             </WrapItem>
-          </>
         ))}
       </Wrap>
       <ViewDetail data={modalLand} isOpen={isOpen} onClose={onClose} />

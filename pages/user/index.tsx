@@ -6,12 +6,12 @@ import {
   Text,
   Tooltip,
   VStack,
-} from "@chakra-ui/react";
-import { QueryErrorResetBoundary, useQuery } from "@tanstack/react-query";
-import { NextPage } from "next";
-import { useEffect } from "react";
-import shallow from "zustand/shallow";
-import useWeb3Store from "../../utils/web3store";
+} from '@chakra-ui/react';
+import { QueryErrorResetBoundary, useQuery } from '@tanstack/react-query';
+import { NextPage } from 'next';
+import { useEffect } from 'react';
+import shallow from 'zustand/shallow';
+import useWeb3Store from '../../utils/web3store';
 
 const Home: NextPage = () => {
   const [contract, connectedAccount, balance] = useWeb3Store(
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
     shallow
   );
   const query = useQuery({
-    queryKey: ["userInfo"],
+    queryKey: ['userInfo'],
     queryFn: async () => {
       const userInfo = await contract?.UserMapping(connectedAccount);
       return userInfo;
@@ -28,22 +28,22 @@ const Home: NextPage = () => {
   if (query.isLoading) return <>Loading Profile....</>;
   return (
     <Box>
-      <Heading fontSize={"4xl"}>User</Heading>
+      <Heading fontSize={'4xl'}>User</Heading>
       <Divider my={4} />
-      <VStack alignItems={"start"} gap={2}>
-        <Text display={"inline-flex"} gap={2} w="full" fontSize={"2xl"}>
-          {query.data?.name}, {query.data && JSON.parse(query.data?.age)}{" "}
+      <VStack alignItems={'start'} gap={2}>
+        <Text display={'inline-flex'} gap={2} w="full" fontSize={'2xl'}>
+          {query.data?.name}, {query.data && JSON.parse(query.data?.age)}{' '}
           {query.data.isUserVerified ? (
-            <Box color={"twitter.300"}>
+            <Box color={'twitter.300'}>
               <Tooltip label="verified" placement="right">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   style={{
-                    width: "30px",
-                    height: "30px",
-                    position: "relative",
+                    width: '30px',
+                    height: '30px',
+                    position: 'relative',
                   }}
                 >
                   <path
