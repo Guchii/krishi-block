@@ -1,11 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import type { AppProps } from 'next/app';
-import {
-  ChakraProvider,
-  Text,
-  useDisclosure,
-  useToast,
-} from '@chakra-ui/react';
+import { ChakraProvider, Text, useDisclosure, useToast } from '@chakra-ui/react';
 import theme from '../theme';
 import Layout from '../components/Layout';
 import '@fontsource/josefin-sans';
@@ -56,7 +51,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const toast = useToast();
 
-  const checkFunctions = (inp: '1' | '2' | '3' | '4') => {
+  const checkFunctions = (inp: '1' | '2' | '3' | '4' | undefined) => {
     switch (inp) {
       case '3':
         return contract?.isSDM;
@@ -64,6 +59,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         return contract?.isTehsildar;
       case '1':
         return contract?.isLekhpal;
+      default:
+        throw new Error('No User Type');
     }
   };
 
@@ -74,11 +71,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       contract,
     });
     try {
-      if (isConnected && userType !== undefined && contract) {
         if (userType === '4') {
-          const isRegistered = await contract?.isUserRegistered(
-            connectedAccount
-          );
+          const isRegistered = await contract?.isUserRegistered(connectedAccount);
           if (!isRegistered) {
             toast({
               title: 'user profile not found',
@@ -120,7 +114,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             router.push(RoleLinks.get(userType as any)?.at(0)?.href as string);
           }
         }
-      }
     } catch (e) {
       toast({
         title: 'error',
@@ -132,7 +125,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   };
 
   useEffect(() => {
-    if (isConnected && userType !== undefined) {
+    if (!!contract && isConnected && userType !== undefined) {
       checkUserType();
     }
   }, [isConnected, userType, contract]);
@@ -144,8 +137,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [isConnected]);
 
   useEffect(() => {
-    if (router.pathname !== '/' && router.pathname !== '/error')
-      setIsDashboard(true);
+    if (router.pathname !== '/' && router.pathname !== '/error') setIsDashboard(true);
     else setIsDashboard(false);
   }, [router.pathname]);
 
@@ -153,17 +145,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <Text
-        w="full"
-        display={"inline-flex"}
-        zIndex={10000}
-        pos="fixed"
-        top={0}
-        left={"50%"}
-      >
-        {userType} {isConnected ? "yes" : "no"}{" "}
-        {permissionMismatch ? "yes" : "no"}
-      </Text> */}
       <Head>
         <title>Krishi Block</title>
         <link
