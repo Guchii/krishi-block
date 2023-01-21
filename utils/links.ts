@@ -88,6 +88,7 @@ RoleLinks.set('4', [
   {
     href: '/user/lands/add',
     name: 'Add Land',
+    verificationRequired: true,
     description: 'Add a new land for the current user',
   },
 ]);

@@ -28,6 +28,7 @@ interface LinkItemInterface {
   href: string;
   name: string;
   description?: string;
+  verificationRequired?: boolean;
 }
 
 interface Window {
