@@ -30,7 +30,6 @@ const Auth: NextPage = () => {
   const deployEncrypted = async (e) => {
     const sig = await encryptionSignature();
     const apiKey = process.env.NEXT_PUBLIC_API_KEY as string;
-    console.log(apiKey);
     const response = await lighthouse.uploadEncrypted(
       e,
       sig.publicKey,
