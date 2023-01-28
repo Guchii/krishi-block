@@ -8,7 +8,7 @@ import lighthouse from "@lighthouse-web3/sdk";
 import { FormField, UserConfirmModal } from "../../components/Form";
 
 const Auth: NextPage = () => {
-  const encryptionSignature = async () => {
+  const Signature = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
     const address = await signer.getAddress();
@@ -28,7 +28,7 @@ const Auth: NextPage = () => {
   };
 
   const deployEncrypted = async (e) => {
-    const sig = await encryptionSignature();
+    const sig = await Signature();
     const apiKey = process.env.NEXT_PUBLIC_API_KEY as string;
     const response = await lighthouse.uploadEncrypted(
       e,
@@ -38,6 +38,17 @@ const Auth: NextPage = () => {
       progressCallback
     );
     console.log(response.data.Hash);
+
+    const cid = response.data.Hash;
+    const { publicKey, signedMessage } = await Signature();
+    const publicKeyUserB = ["0xc5074464eBF403a44D4CFECe2C532aF0D9b6DF22"];
+    const res = await lighthouse.shareFile(
+      publicKey,
+      publicKeyUserB,
+      cid,
+      signedMessage
+    );
+    console.log(res);
   };
 
   const {
