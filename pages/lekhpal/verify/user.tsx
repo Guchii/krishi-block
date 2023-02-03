@@ -28,6 +28,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { NextPage } from "next";
 import { FC, useState } from "react";
+import useDecrypt from "../../../utils/hooks/useDecrypt";
 
 import useWeb3Store from "../../../utils/web3store";
 
@@ -163,6 +164,7 @@ export const VerifyUserModal: FC<{
 			},
 		},
 	);
+	const { decrypt } = useDecrypt();
 	const verifyMutation = useMutation(
 		async () => {
 			const tx = await contract?.verifyUser(address);
@@ -207,14 +209,33 @@ export const VerifyUserModal: FC<{
 					<ModalCloseButton />
 					<ModalBody>
 						<Text fontWeight="bold" mb="1rem">
-							Verify User {address}
+							{address}
 						</Text>
 						{isLoading ? (
 							<Spinner />
 						) : (
-							<Code w={"full"} p={"2"} colorScheme={"facebook"}>
-								{JSON.stringify(user, null, 2)}
-							</Code>
+							<>
+								<VStack mb={4} alignItems="flex-start">
+									<Text fontWeight={"bold"}>Name</Text>
+									<Text>{user?.name}</Text>
+									<Text fontWeight={"bold"}>Age</Text>
+									<Text>{user?.age && JSON.parse(user?.age)}</Text>
+									<Text fontWeight={"bold"}>Email</Text>
+									<Text>{user?.email}</Text>
+									<Text fontWeight={"bold"}>City</Text>
+									<Text>{user?.city}</Text>
+									<Text fontWeight={"bold"}>Document</Text>
+									<Text>{user?.document}</Text>
+								</VStack>
+								<HStack>
+									<Button onClick={() => decrypt({ cid: user?.panNumber })}>
+										View Pan
+									</Button>
+									<Button onClick={() => decrypt({ cid: user?.aadharNumber })}>
+										View Adhar
+									</Button>
+								</HStack>
+							</>
 						)}
 					</ModalBody>
 
