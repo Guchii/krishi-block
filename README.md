@@ -1,34 +1,103 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🧑‍🌾 **KrishiBlock**
 
-## Getting Started
+Krishiblock brings the advantages of blockchain to one of the most centralized existing solutions ~ land registry.
 
-First, run the development server:
+India is the second-largest population and the seventh-largest territory in the world. India is an agriculture-based economy, and agriculture land record keeping is a mammoth transnational activity with mostly manual and non-digital processes. There are many challenges related to agricultural land transactions such as digitization of records and keeping the agricultural-land ledger immutable and secure. KrishiBlock aims to solve these challenges in an efficient manner this will help handle the increasing agricultural-land litigation cases, reducing corruption, and improving the quality of farm owner’s life.
 
-```bash
-npm run dev
-# or
+Any user can sign into KrishiBlock and register their lands, these users and their lands are then to be verified by the Lekhpal for them to be recognized as official records. Lekhpal can only be added by the Tehsildar, the Tehsildar plays a significant role as it is the only role that can approve the transfer of ownership of lands from one user to another. The contract deployer is the SDM, who is at the top of the chain and is required while adding or removing tehsildar, the SDM can be transferred if need be.
+
+```
+KrishiBlock incorporates the hierarchy that the government already has in place, it goes like this:  
+SDM (Sub-divisional magistrate) -> Tehsildar (Revenue Officer) -> Lekhpal (Village accountant) -> User
+```
+## 💻 **Screenshots :**
+
+### Landing page and Login :
+<p>
+<a><img height="250rem" src="https://i.imgur.com/hxbdjvS.png"/></a>
+</p>
+<p>
+<a><img height="220rem" src="https://i.imgur.com/IBxPskm.png"/></a>
+<a><img height="220rem" src="https://i.imgur.com/vVVECKh.png"/></a>
+</p>
+
+
+### User Interface :
+
+<p>
+<a><img height="220rem" src="https://i.imgur.com/46RZHpT.png"/></a>
+<a><img height="220rem" src="https://i.imgur.com/Fm4qm8D.png"/></a>
+</p>
+<p>
+<a><img height="220rem" src="https://i.imgur.com/v9voHMv.png"/></a>
+<a><img height="220rem" src="https://i.imgur.com/mYSsMpO.png"/></a>
+</p>
+
+### Add Land :
+
+<p>
+<a><img height="220rem" src="https://i.imgur.com/3fnSjT8.png"/></a>
+<a><img height="220rem" src="https://i.imgur.com/KDyeRlX.png"/></a>
+</p>
+
+### Lekhpal Pannel :
+<p>
+<a><img height="250rem" src="https://i.imgur.com/5SmGOac.png"/></a>
+</p>
+<p>
+<a><img height="220rem" src="https://i.imgur.com/PJnO7Vq.png"/></a>
+<a><img height="220rem" src="https://i.imgur.com/ixgjBGZ.png"/></a>
+</p>
+<p>
+<a><img height="220rem" src="https://i.imgur.com/MGz1VCV.png"/></a>
+<a><img height="220rem" src="https://i.imgur.com/vBWiEsM.png"/></a>
+</p>
+
+### Tehsildar Pannel :
+<p>
+<a><img height="250rem" src="https://i.imgur.com/nSA5KgI.png"/></a>
+</p>
+<p>
+<a><img height="220rem" src="https://i.imgur.com/ZwlbxVw.png"/></a>
+<a><img height="220rem" src="https://i.imgur.com/CeID0R3.png"/></a>
+</p>
+<p>
+<a><img height="220rem" src="https://i.imgur.com/oMy3WLl.png"/></a>
+<a><img height="220rem" src="https://i.imgur.com/ppZjLKG.png"/></a>
+</p>
+
+### SDM Pannel :
+<p>
+<a><img height="220rem" src="https://i.imgur.com/j47ei1s.png"/></a>
+<a><img height="220rem" src="https://i.imgur.com/ux9zMiK.png"/></a>
+</p>
+<p>
+<a><img height="220rem" src="https://i.imgur.com/UmTbHhS.png"/></a>
+<a><img height="220rem" src="https://i.imgur.com/nGopdyk.png"/></a>
+</p>
+
+### Project FlowChart :
+<p>
+<a><img height="600rem" src="https://user-images.githubusercontent.com/75518572/209988095-5e44f1c5-6c58-4293-882c-408500ef7c7e.png"/></a>
+</p>
+
+
+## ⚙️ **Installation :**
+
+### Download Software Dependencies
+
+```
+yarn install
+```
+
+### Local Deployment
+
+```
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Build
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+yarn build
+```
